@@ -1,0 +1,8 @@
+{
+    "uncaughtExceptionsFilePath": "logs/uncaughtExceptions.log",
+    "logFilePath": "logs/logfile.log",
+    "SRV_PORT": "3000",
+    "DB_HOST": "192.168.99.100",
+    "DB_PORT": "32770",
+    "DB_NAME": "hackajob-phonebook"
+}

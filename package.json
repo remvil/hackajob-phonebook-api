@@ -1,0 +1,46 @@
+{
+    "name": "hackajob-phonebook-api",
+    "version": "0.0.0",
+    "description": "Simple API with Authentication and role based Authorization",
+    "main": "app.js",
+    "scripts": {
+        "start": "node ./bin/www",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/remvil/hackajob-phonebook-api.git"
+    },
+    "keywords": [
+        "REST",
+        "API",
+        "node",
+        "services",
+        "phonebook",
+        "users",
+        "auth"
+    ],
+    "author": "Remigio Vildacci",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/remvil/hackajob-phonebook-api/issues"
+    },
+    "homepage": "https://github.com/remvil/hackajob-phonebook-api#readme",
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "body-parser": "^1.18.3",
+        "config": "^3.0.1",
+        "connect-flash": "^0.1.1",
+        "cookie-parser": "^1.4.4",
+        "express": "^4.16.4",
+        "express-handlebars": "^3.0.2",
+        "express-messages": "^1.0.1",
+        "express-session": "^1.15.6",
+        "express-validator": "^5.3.1",
+        "mongodb": "^3.1.13",
+        "mongoose": "^5.4.18",
+        "passport": "^0.4.0",
+        "passport-http": "^0.3.0",
+        "passport-local": "^1.0.0"
+    }
+}
