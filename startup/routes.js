@@ -1,10 +1,7 @@
-// const express = require('express');
-const routes = require('../routes/index');
-const users = require('../routes/users');
-const contacts = require('../routes/contacts');
+const auth = require('../middleware/auth');
 
 module.exports = (app) => {
-    app.use('/', routes);
-    app.use('/users', users);
-    app.use('/api/contacts', contacts);
+    app.use('/', require('../routes/index'));
+    app.use('/users', require('../routes/users'));
+    app.use('/api/contacts', auth.ensureAuthenticated, require('../routes/contacts'));
 }

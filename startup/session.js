@@ -6,6 +6,7 @@ module.exports = (app) => {
     app.use(session({
         secret: 'secret',
         saveUninitialized: true,
+        cookie: { maxAge: 60000 },
         resave: true
     }));
 

@@ -5,7 +5,7 @@ const auth = require('./auth');
 const { Contact, validateContact } = require('../models/contact');
 
 // GET route: 
-router.get('/', auth.required, async(req, res) => {
+router.get('/', async(req, res) => {
     const contacts = await Contact.find().sort('name');
     res.send(contacts);
 });
@@ -18,7 +18,7 @@ router.get('/:id', async(req, res) => {
 })
 
 // POST route: add a new contact into the database
-router.post('/', auth.required, async(req, res) => {
+router.post('/', async(req, res) => {
     const { error } = validateContact(req.body);
     if (error) return res.status(404).send(error.details[0].message);
 
@@ -32,7 +32,7 @@ router.post('/', auth.required, async(req, res) => {
 });
 
 // PUT route: update a contact
-router.put('/:id', auth.required, async(req, res) => {
+router.put('/:id', async(req, res) => {
     const { error } = validateContact(req.body);
     if (error) return res.status(404).send(error.details[0].message);
 
@@ -47,7 +47,7 @@ router.put('/:id', auth.required, async(req, res) => {
 });
 
 // DELETE route: removing a contact
-router.delete('/:id', auth.required, async(req, res) => {
+router.delete('/:id', async(req, res) => {
     const contact = await Contact.findByIdAndRemove(res.params.id);
     if (!contact) return res.status(404).send('The contact with the given ID was not found.');
     res.send(contact)

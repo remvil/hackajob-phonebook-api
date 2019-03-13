@@ -7,7 +7,7 @@ const Contact = mongoose.model('Contact', new mongoose.Schema({
     name: { type: String, required: true, minlength: 5, maxlength: 50 },
     phoneNumber: { type: String },
     address: { type: String },
-    // owner: { type: mongoose.Schema.Types.OnjectId, ref: 'users' }
+    // owner: { type: mongoose.Schema.Types.OnjectId, ref: 'document.users' }
 }));
 
 // Validation

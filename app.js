@@ -1,26 +1,16 @@
 const config = require('config');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var exphbs = require('express-handlebars');
-var expressValidator = require('express-validator');
-var flash = require('connect-flash');
-var session = require('express-session');
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var mongo = require('mongodb');
-var mongoose = require('mongoose');
+const express = require('express');
 
 /** Setup DB */
 require('./startup/db')();
 /** Init app object */
-var app = express();
+const app = express();
 
 /** Setup handlebars View Engine */
 require('./startup/viewengine')(app, __dirname);
 /** Setup Sessions */
 require('./startup/session')(app);
+require('./config/passport');
 
 /** Express Validator */
 require('./middleware/validator')(app);

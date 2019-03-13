@@ -1,21 +1,21 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
+
 var User = require('../models/user');
 
 // Register
-router.get('/register', function(req, res) {
+router.get('/register', (req, res) => {
     res.render('register');
 });
 
 // Login
-router.get('/login', function(req, res) {
+router.get('/login', (req, res) => {
     res.render('login');
 });
 
 // Register User
-router.post('/register', function(req, res) {
+router.post('/register', (req, res) => {
     var name = req.body.name;
     var email = req.body.email;
     var username = req.body.username;
@@ -55,40 +55,30 @@ router.post('/register', function(req, res) {
     }
 });
 
-passport.use(new LocalStrategy(
-    function(username, password, done) {
-        User.getUserByUsername(username, function(err, user) {
-            if (err) throw err;
-            if (!user) {
-                return done(null, false, { message: 'Unknown User' });
-            }
+router.post('/login', passport.authenticate('local', { session: true, successRedirect: '/', failureRedirect: '/users/login', failureFlash: true }), (req, res) => {
+    res.redirect('/');
+});
 
-            User.comparePassword(password, user.password, function(err, isMatch) {
-                if (err) throw err;
-                if (isMatch) {
-                    return done(null, user);
-                } else {
-                    return done(null, false, { message: 'Invalid password' });
-                }
+router.post('/myLogin', (req, res) => {
+    passport.authenticate('local', { session: false }, (err, user, info) => {
+        if (err || !user) {
+            return res.status(400).json({
+                message: 'Something is not right',
+                user: user
             });
+        }
+
+        req.login(user, { session: false }, (err) => {
+            if (err)
+                res.send(err);
+            // Generate a signed son web token with the content of the user object and return it in the response
+            const token = jwt.sign(user, config.JWT_SECRET);
+            console.log(token);
+
+            return res.json({ user, token });
         });
-    }));
-
-passport.serializeUser(function(user, done) {
-    done(null, user.id);
+    })
 });
-
-passport.deserializeUser(function(id, done) {
-    User.getUserById(id, function(err, user) {
-        done(err, user);
-    });
-});
-
-router.post('/login',
-    passport.authenticate('local', { successRedirect: '/', failureRedirect: '/users/login', failureFlash: true }),
-    function(req, res) {
-        res.redirect('/');
-    });
 
 router.get('/logout', function(req, res) {
     req.logout();
@@ -97,5 +87,11 @@ router.get('/logout', function(req, res) {
 
     res.redirect('/users/login');
 });
+
+router.post('/profile', passport.authenticate('jwt', { session: false }),
+    function(req, res) {
+        res.send(req.user.profile);
+    }
+);
 
 module.exports = router;
