@@ -5,7 +5,7 @@ module.exports = {
             next();
         } else {
             req.flash('error_msg', 'You are not logged in');
-            res.redirect('/users/login');
+            res.status(403).send('403 Forbidden');
         }
     }
 }
