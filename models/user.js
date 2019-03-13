@@ -1,15 +1,36 @@
-var mongoose = require('mongoose');
-var bcrypt = require('bcryptjs');
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 // User Schema
-var UserSchema = mongoose.Schema({
+const userSchema = new mongoose.Schema({
     username: { type: String, index: true },
     password: { type: String },
     email: { type: String },
     name: { type: String }
 });
 
-var User = module.exports = mongoose.model('User', UserSchema);
+var User = module.exports = mongoose.model('User', userSchema);
+
+// userSchema.methods.generateJWT = function() {
+//     const today = new Date();
+//     const expirationDate = new Date(today);
+//     expirationDate.setDate(today.getDate() + 60);
+
+//     return jwt.sign({
+//         email: this.username,
+//         id: this._id,
+//         exp: parseInt(expirationDate.getTime() / 1000, 10),
+//     }, 'secret');
+// }
+
+// userSchema.methods.toAuthJSON = function() {
+//     return {
+//         _id: this._id,
+//         email: this.email,
+//         token: this.generateJWT(),
+//     };
+// };
+
 
 module.exports.createUser = function(newUser, callback) {
     bcrypt.genSalt(10, function(err, salt) {
